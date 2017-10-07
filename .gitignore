@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+assign2Graph
+
+dist/*

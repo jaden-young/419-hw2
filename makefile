@@ -1,24 +1,26 @@
 DISTDIR=./dist/
 
-.PHONY: clean
+.PHONY: clean dist
 
-all: doc
+all: graph
 
-graph:
+graph: assign2Graph.cpp
 	g++ -std=c++11 -O3 -w assign2Graph.cpp -lpthread -o assign2Graph
 
 bench: graph
 	python3 run_bench.py
 
-doc: bench
-	emacs readme.org --batch -f org-latex-export-to-pdf --kill
+pdf: graph
+	yes 'yes' | emacs readme.org --batch --eval "(setq org-babel-python-command \"python3\")" --eval "(require (quote ob-python))" -f org-latex-export-to-pdf --kill
 
 clean:
-	rm -rf assign2Graph networkDatasets/HcNetwork_bench.csv *.tex* __pycache__ \
-				 auto *.pdf dist/
+	rm -rf  *.tex* __pycache__ auto
+
+distclean: clean
+	rm -rf *~ networkDatasets/HcNetwork_bench.csv $(DISTDIR) readme.pdf assign2Graph
 
 $(DISTDIR):
 	mkdir -v -p $(DISTDIR)
 
-dist: $(DISTDIR)
-	tar --exclude='dist' --exclude='Assignment2.pdf' -zcvf ./dist/jadyoungAssignment2.tgz *
+dist: readme.org lab_bench.sh run_bench.py $(DISTDIR)
+	tar --exclude='dist' --exclude='Assignment2.pdf' -zcvf $(DISTDIR)/jadyoungAssig2.tgz *

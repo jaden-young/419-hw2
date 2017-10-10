@@ -8,6 +8,7 @@ import os
 EXECUTABLE_NAME = './assign2Graph'
 THREAD_NUMS = [2, 4, 8, 16]
 FILENAME = 'networkDatasets/HcNetwork.txt'
+TRIES = 10
 
 
 def time_run(filename, num_threads):
@@ -35,10 +36,14 @@ def bench_file(filename, thread_nums):
     seconds.append(single_threaded_time)
 
     for thread in thread_nums:
+        total_time = 0.0
         threads.append(thread)
-        t = time_run(filename, thread)
-        seconds.append(t)
-        speedup = single_threaded_time / t
+        for _ in range(0, TRIES):
+            t = time_run(filename, thread)
+            total_time += t
+        avg_time = total_time / TRIES
+        seconds.append(avg_time)
+        speedup = single_threaded_time / avg_time
         speedups.append(speedup)
 
     csv_name = filename.split('.')[0] + '_bench.csv'

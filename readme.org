@@ -11,7 +11,7 @@
 ** Building the program
    To build the assign2Graph executable, run
   #+BEGIN_SRC sh 
-  make graph
+  make
   #+END_SRC
 
 ** Running the program
@@ -27,19 +27,20 @@
   make bench
   #+END_SRC
 
-  To regenerate this document with new benchmark results, run either
+  To regenerate this document with new benchmark results, run
   #+BEGIN_SRC sh 
-  make doc
+  make pdf
   #+END_SRC
-  or simply
-  #+BEGIN_SRC sh 
-  make
-  #+END_SRC
-
 ** Results
-   :PROPERTIES:
-   :header-args: :exports results :results table
-   :END:
+  :PROPERTIES:
+  :header-args: :exports results :results value
+  :END:
+  Below are the results of running the assign2Graph executable on the
+  file /networkDatasets/HcNetwork.txt/ with various numbers of threads.
+  The running time for each thread is averaged over 10 trials.
+  Note that running with 1 thread is simply serial, and does not involve
+  using any pthreads, mutexes, or barriers.
+
   #+NAME: run_bench
   #+BEGIN_SRC python
   import run_bench
@@ -47,18 +48,3 @@
   csv_data.insert(1, None) # to get nice headers in org table
   return csv_data
   #+END_SRC
-
-  Below are the results of running the assign2Graph executable on the
-  file /networkDatasets/HcNetwork.txt/ with various numbers of threads.
-  Note that running with 1 thread is simply serial, and does not involve
-  using any pthreads.
-
-  #+RESULTS: run_bench
-  | Threads |              Seconds |            Speedup |
-  |---------+----------------------+--------------------|
-  |       1 |  0.03646707534790039 |                  1 |
-  |       2 | 0.038381099700927734 | 0.9501310705544719 |
-  |       4 |    0.026641845703125 | 1.3687893757159222 |
-  |       8 | 0.021158695220947266 | 1.7235030311225294 |
-  |      16 |  0.02130746841430664 |  1.711469173100593 |
-   

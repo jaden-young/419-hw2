@@ -2,7 +2,7 @@
 //To run: ./assign2Graph filename threads
 //./assign2Graph networkDatasets/toyGraph1.txt 2
 #include <stdio.h>      /* printf, fgets */
-#include <stdlib.h>  /* atoi */
+#include <stdlib.h>     /* atoi */
 #include <fstream>
 #include <iostream>
 #include <vector>
